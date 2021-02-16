@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home"
+    app:startDestination="@id/fragmentBookmark">
+
+    <fragment
+        android:id="@+id/fragmentBookmark"
+        tools:layout="@layout/fragment_bookmark"
+        android:name="com.yogeshlokhande.weathercheck.ui.main.view.fragments.FragmentBookmark"
+        android:label="@string/title_bookmark" >
+        <action
+            android:id="@+id/action_fragmentBookmark_to_fragmentMaps"
+            app:destination="@id/fragmentMaps" />
+        <action
+            android:id="@+id/action_fragmentBookmark_to_fragmentViewDetails"
+            app:destination="@id/fragmentViewDetails" />
+        <action
+            android:id="@+id/action_fragmentBookmark_to_fragmentWebView"
+            app:destination="@id/fragmentWebView" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMaps"
+        android:name="com.yogeshlokhande.weathercheck.ui.main.view.fragments.FragmentMaps"
+        tools:layout="@layout/fragment_map"
+        android:label="Map" />
+    <fragment
+        android:id="@+id/fragmentViewDetails"
+        tools:layout="@layout/fragment_view_details"
+        android:name="com.yogeshlokhande.weathercheck.ui.main.view.fragments.FragmentViewDetails"
+        android:label="View Details" />
+    <fragment
+        android:id="@+id/fragmentWebView"
+        tools:layout="@layout/fragment_webview_binding"
+        android:name="com.yogeshlokhande.weathercheck.ui.main.view.fragments.FragmentWebView"
+        android:label="Settings-open weather" />
+</navigation>

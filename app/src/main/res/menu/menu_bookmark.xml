@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_bookmark"
+        android:icon="@drawable/ic_bookmarks"
+        android:title="@string/bookmark_city"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+   <!-- <item
+        android:id="@+id/action_setting"
+        android:icon="@drawable/ic_baseline_settings"
+        android:title="@string/settings"
+        app:showAsAction="always|withText" />-->
+
+    <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/ic_information"
+        android:title="@string/help"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
+        android:id="@+id/action_reset"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/reset"
+        app:showAsAction="collapseActionView|ifRoom" />
+</menu>
