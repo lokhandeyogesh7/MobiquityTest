@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ class FragmentBookmark :
     BaseFragment<CityViewModel, FragmentBookmarkBinding, CityRepository>(),
     BookmarkListAdapter.DeleteCity, BookmarkListAdapter.ItemClickListener {
 
+    private var cityList: List<LatLong> = mutableListOf()
     private lateinit var mAdapter: BookmarkListAdapter
     private val TAG = "FragmentBookmark"
 
@@ -50,7 +52,7 @@ class FragmentBookmark :
         setHasOptionsMenu(true)
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolBarBookmark.toolbar)
-        binding.toolBarBookmark.toolbar.title = "Bookmarked Cities"
+        binding.toolBarBookmark.toolbar.title = getString(R.string.title_bookmarkedcity)
 
         getAllCities()
     }
@@ -59,8 +61,10 @@ class FragmentBookmark :
      * Get All bookmarked cities list and show it in recyclerview
      */
     private fun getAllCities() {
-        viewModel.getAllCities()?.observe(requireActivity(), { cityList ->
-            Log.d(TAG, "onViewCreated: " + cityList.size)
+        viewModel.getAllCities()?.observe(requireActivity(), { it ->
+            Log.d(TAG, "onViewCreated: " + it.size)
+            cityList = it
+
             if (cityList.isEmpty()) {
                 binding.llNoBookmark.visibility = View.VISIBLE
                 binding.rvCitiesList.visibility = View.GONE
@@ -70,18 +74,22 @@ class FragmentBookmark :
             } else {
                 binding.llNoBookmark.visibility = View.GONE
                 binding.rvCitiesList.visibility = View.VISIBLE
-                mAdapter = BookmarkListAdapter(
-                    this@FragmentBookmark,
-                    cityList,
-                    this@FragmentBookmark
-                )
-                val mLayoutManager = LinearLayoutManager(requireActivity())
-                binding.rvCitiesList.layoutManager = mLayoutManager
-                binding.rvCitiesList.layoutManager = mLayoutManager
-                binding.rvCitiesList.itemAnimator = DefaultItemAnimator()
-                binding.rvCitiesList.adapter = mAdapter
+                setAdapter()
             }
         })
+    }
+
+    private fun setAdapter() {
+        mAdapter = BookmarkListAdapter(
+            this@FragmentBookmark,
+            cityList,
+            this@FragmentBookmark
+        )
+        val mLayoutManager = LinearLayoutManager(requireActivity())
+        binding.rvCitiesList.layoutManager = mLayoutManager
+        binding.rvCitiesList.layoutManager = mLayoutManager
+        binding.rvCitiesList.itemAnimator = DefaultItemAnimator()
+        binding.rvCitiesList.adapter = mAdapter
     }
 
     /**
@@ -89,6 +97,26 @@ class FragmentBookmark :
      */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_bookmark, menu)
+        val myActionMenuItem = menu.findItem(R.id.action_search)
+        val searchView = myActionMenuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (!searchView.isIconified) {
+                    searchView.isIconified = true
+                }
+                myActionMenuItem.collapseActionView()
+                if (cityList.isEmpty()) {
+                    getAllCities()
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(s: String?): Boolean {
+                cityList = cityList.filter { it.address.toLowerCase().contains(s!!.toLowerCase()) }
+                setAdapter()
+                return false
+            }
+        })
         super.onCreateOptionsMenu(menu, inflater)
     }
 

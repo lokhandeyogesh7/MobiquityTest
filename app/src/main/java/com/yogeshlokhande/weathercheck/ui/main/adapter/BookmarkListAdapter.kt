@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yogeshlokhande.weathercheck.data.model.LatLong
 import com.yogeshlokhande.weathercheck.databinding.ItemBookmarkBinding
 
-class BookmarkListAdapter(val itemClickListener: ItemClickListener, val cityList: List<LatLong>,val clickListener:DeleteCity) :
+class BookmarkListAdapter(private val itemClickListener: ItemClickListener, private val cityList: List<LatLong>, private val clickListener:DeleteCity) :
     RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewholder>() {
 
     inner class BookmarkViewholder(var itemBookmarkBinding: ItemBookmarkBinding) :

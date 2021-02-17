@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import com.yogeshlokhande.weathercheck.R
 import com.yogeshlokhande.weathercheck.data.repository.WebViewRepository
 import com.yogeshlokhande.weathercheck.databinding.FragmentWebviewBindingBinding
 import com.yogeshlokhande.weathercheck.ui.base.BaseFragment
@@ -51,7 +52,7 @@ class FragmentWebView :
         (activity as AppCompatActivity).setSupportActionBar(binding.webToolbar.toolbar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-        binding.webToolbar.toolbar.title = "Help"
+        binding.webToolbar.toolbar.title = getString(R.string.title_help)
         binding.webToolbar.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }

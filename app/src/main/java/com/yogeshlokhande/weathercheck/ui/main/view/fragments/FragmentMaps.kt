@@ -83,7 +83,7 @@ class FragmentMaps : BaseFragment<CityViewModel, FragmentMapBinding, CityReposit
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        binding.toolbar.toolbar.title = "Locate Your City"
+        binding.toolbar.toolbar.title = getString(R.string.title_locate_your_city)
 
         var mapFragment: SupportMapFragment =
             childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment

@@ -1,7 +1,7 @@
 package com.yogeshlokhande.weathercheck.ui.main.view.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +23,6 @@ import com.yogeshlokhande.weathercheck.ui.main.viewmodel.DetailsViewModel
 
 class FragmentViewDetails :
     BaseFragment<DetailsViewModel, FragmentViewDetailsBinding, DetailsRepository>() {
-    private val TAG = "FragmentViewDetails"
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
@@ -84,18 +83,18 @@ class FragmentViewDetails :
     /**
      * Fetching data for today's forecast and setting it to the views
      */
+    @SuppressLint("SetTextI18n")
     private fun fetchTodaysForecast() {
         viewModel.fetchTodaysForecast(latitude, longitude, getString(R.string.weatherappkey))
             .observe(viewLifecycleOwner,
                 {
                     binding.rlTopView?.visibility = View.VISIBLE
                     binding.progressTop?.visibility = View.GONE
-                    Log.d(TAG, "onViewCreated: " + it.name)
-                    binding.tvEnvType.text = it.weather?.get(0)?.main
-                    binding.tvPlaceName.text = it.weather?.get(0)?.description
-                    binding.tvTemp.text = it.main?.temp.toString() + "\u2103"
-                    binding.tvHumidity.text = "${it.main?.humidity} %"
-                    binding.tvWind.text = "${it.wind?.speed} meter/sec"
+                    binding.tvEnvType.text = it.weather[0].main
+                    binding.tvPlaceName.text = it.weather[0].description
+                    binding.tvTemp.text = it.main.temp.toString() + "\u2103"
+                    binding.tvHumidity.text = "${it.main.humidity} %"
+                    binding.tvWind.text = "${it.wind.speed} meter/sec"
                     Glide.with(this)
                         .load("http://openweathermap.org/img/w/${it.weather?.get(0)?.icon}.png")
                         .into(binding.imgBg)
@@ -108,7 +107,6 @@ class FragmentViewDetails :
     private fun setUptoolbar() {
         binding.contentView.rvForecast.visibility = View.GONE
         binding.contentView.progress.visibility = View.VISIBLE
-
 
         binding.rlTopView?.visibility = View.GONE
         binding.progressTop?.visibility = View.VISIBLE

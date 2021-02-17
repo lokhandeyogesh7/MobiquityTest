@@ -12,7 +12,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ForecastAdapter(val forecastList: List<List1>?) :
+class ForecastAdapter(private val forecastList: List<List1>?) :
     RecyclerView.Adapter<ForecastAdapter.ForecastViewholder>() {
 
     inner class ForecastViewholder(var itemForecastRowBinding: ItemForecastRowBinding) :
